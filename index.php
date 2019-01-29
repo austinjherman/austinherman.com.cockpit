@@ -1,8 +1,5 @@
 <?php
 
-phpinfo();
-exit;
-
 define('COCKPIT_ADMIN', 1);
 
 // set default timezone
