@@ -11,3 +11,22 @@ jobs:
       - run:
           name: Print the Current Time
           command: date
+  deploy-prod:
+    docker:
+      # specify the version you desire here (you might not want node)
+      - image: circleci/node:7.10
+    steps:
+      - checkout
+      - run: ssh -oStrictHostKeyChecking=no -v $DROPLET_USER@$DROPLET_IP "./deploy_project.sh"
+workflows:
+  version: 2
+  build-and-deploy:
+    jobs:
+      - build
+      - deploy-prod:
+          filters:
+            branches:
+              only:
+                - master
+          requires:
+            - build
